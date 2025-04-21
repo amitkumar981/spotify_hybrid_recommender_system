@@ -186,3 +186,5 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+/transformer.pkl
+/sparse_matrix.npz
