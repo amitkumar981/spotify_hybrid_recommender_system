@@ -1,5 +1,7 @@
 # Data
-/data/
+# Ignore all data files except DVC metadata
+/data/*
+!/data/**/*.dvc
 
 # Mac OS-specific storage files
 .DS_Store
