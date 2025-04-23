@@ -1,4 +1,4 @@
 [core]
     remote = myremote
 ['remote "myremote"']
-    url = C:\Users\redhu\spotify_hybrid_recommender_syatem\.dvcstore
+    url = s3://spotify-hybrid-recommender-system
