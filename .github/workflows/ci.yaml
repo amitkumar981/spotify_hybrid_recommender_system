@@ -3,7 +3,7 @@ name: CI-CD Pipeline
 on:
   push:
     branches:
-      - master  # Adjust this if using a different branch
+      - master
   pull_request:
     branches:
       - master
@@ -31,14 +31,15 @@ jobs:
         pip install 'dvc[s3]'
         pip install dagshub
 
-    - name: Configure DVC remote (optional, only if not already configured in repo)
+    - name: Configure DVC remote
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
       run: |
-        dvc remote default myremote
+        dvc remote add -f -d myremote s3://spotify-hybrid-recommender-system
         dvc remote modify myremote access_key_id $AWS_ACCESS_KEY_ID
         dvc remote modify myremote secret_access_key $AWS_SECRET_ACCESS_KEY
+        dvc remote modify myremote region ap-southeast-2
 
     - name: Pull DVC-tracked data
       env:
@@ -46,12 +47,11 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
         AWS_DEFAULT_REGION: ap-southeast-2
       run: |
-        dvc pull
-        ls -lh data/raw/
-        ls -lh "data/raw/Music Info.csv"
+        dvc pull -v
+        echo "Checking files in data/raw/"
+        ls -lh data/raw/ || echo "data/raw/ folder not found"
+        ls -lh "data/raw/Music Info.csv" || echo "Music Info.csv not found"
 
-    - name: List raw data files (debug step)
-      run: ls -lh data/raw/
 
     - name: Run DVC Pipeline
       env:
