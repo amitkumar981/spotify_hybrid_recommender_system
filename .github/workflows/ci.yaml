@@ -28,34 +28,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-        pip install 'dvc[s3]'
-        pip install dagshub
-
-    - name: Configure DVC remote
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
-      run: |
-        dvc remote add -f -d myremote s3://spotify-hybrid-recommender-system
-        dvc remote modify myremote access_key_id $AWS_ACCESS_KEY_ID
-        dvc remote modify myremote secret_access_key $AWS_SECRET_ACCESS_KEY
-        dvc remote modify myremote region ap-southeast-2
-
-    - name: Pull DVC-tracked data
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
-        AWS_DEFAULT_REGION: ap-southeast-2
-      run: |
-        echo "Running: dvc pull -v"
-        dvc pull -v
-        echo "--- DVC Status ---"
-        dvc status -v
-        echo "--- Cache Check ---"
-        du -sh .dvc/cache || echo "No DVC cache found"
-        echo "--- File Check ---"
-        ls -lh data/raw/ || echo "data/raw/ folder not found"
-        ls -lh "data/raw/Music Info.csv" || echo "Music Info.csv not found"
+ 
 
     - name: Run DVC Pipeline
       env:
@@ -64,12 +37,6 @@ jobs:
         AWS_DEFAULT_REGION: ap-southeast-2
       run: dvc repro
 
-    - name: Push DVC-tracked data to remote
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
-        AWS_DEFAULT_REGION: ap-southeast-2
-      run: dvc push
 
     - name: Configure Git
       run: |

@@ -3,17 +3,19 @@
 # ---------------------
 
 # Ignore everything in the data folder
-data/*
+data/**
 
-# But keep the raw folder
+# Allow all DVC-tracked files to be committed
+!data/**/*.dvc
+
+# Allow folder structure (for .dvc files to live in subfolders)
+!data/**/.gitkeep
+
+# Allow raw folder so we can track .dvc files inside it
 !data/raw/
 
-# And keep DVC metadata files inside it
-!data/raw/*.dvc
-
-# Ignore all files in data/ except tracked .dvc files
-data/*
-!data/**/*.dvc
+# Optional: keep placeholder file so folder is tracked by Git
+!data/raw/.gitkeep
 
 # DVC cache (optional — only ignore if you don't want to track it)
 .dvc/cache/
@@ -139,7 +141,4 @@ celerybeat.pid
 *.sage.py
 
 # Custom model/output artifacts
-/transformer.pkl
 /sparse_matrix.npz
-
-

@@ -16,30 +16,6 @@ stages:
       hash: md5
       md5: 31b236affe096c097bc079fc1f342432
       size: 13712182
-  transform_data:
-    cmd: python content_based_filtering.py
-    deps:
-    - path: content_based_filtering.py
-      hash: md5
-      md5: 6875cdfcff947384d7f3422dab8c80fb
-      size: 5214
-    - path: data/cleaned/cleaned_df.csv
-      hash: md5
-      md5: 31b236affe096c097bc079fc1f342432
-      size: 13712182
-    - path: data_cleaning.py
-      hash: md5
-      md5: 903a1f4ad6d0cd0fada6456a8fd46746
-      size: 4246
-    outs:
-    - path: data/transformed_data.npz
-      hash: md5
-      md5: c4a44f43c03c4d89eff332ab135d68a7
-      size: 4553655
-    - path: transformer.pkl
-      hash: md5
-      md5: 40f0beb98bbbfb39f2d7b77ea3fdda0e
-      size: 134243
   create interaction_matrix:
     cmd: python collaborative_filtering.py
     deps:
@@ -82,5 +58,5 @@ stages:
     outs:
     - path: data/transformed_hybrid_data.npz
       hash: md5
-      md5: 2378c43477c41beff243c639cbad3962
-      size: 2971060
+      md5: 3b289e05bdf0552f55db0c4961cc9370
+      size: 3004189

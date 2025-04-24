@@ -1,4 +1,4 @@
 [core]
-    remote = myremote
-['remote "myremote"']
+    remote = hybridremote
+['remote "hybridremote"']
     url = s3://spotify-hybrid-recommender-system

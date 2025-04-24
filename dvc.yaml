@@ -2,36 +2,27 @@ stages:
   data_cleaning:
     cmd: python data_cleaning.py
     deps:
-      - data/raw/Music Info.csv
-      - data_cleaning.py
-    outs: 
-      - data/cleaned/cleaned_df.csv
-
-  transform_data:
-    cmd: python content_based_filtering.py
-    deps:
-      - data/cleaned/cleaned_df.csv
-      - content_based_filtering.py
-      - data_cleaning.py
+    - data/raw/Music Info.csv
+    - data_cleaning.py
     outs:
-      - data/transformed_data.npz
-      - transformer.pkl
+    - data/cleaned/cleaned_df.csv
+
   create interaction_matrix:
     cmd: python collaborative_filtering.py
     deps:
-      - data/raw/User Listening History.csv
-      - data/cleaned/cleaned_df.csv
-      - content_based_filtering.py
-    
+    - data/raw/User Listening History.csv
+    - data/cleaned/cleaned_df.csv
+    - content_based_filtering.py
+
     outs:
-      - data/filtered_songs_data.csv
-      - sparse_matrix.npz
-      - data/track_ids.npy
-  
+    - data/filtered_songs_data.csv
+    - sparse_matrix.npz
+    - data/track_ids.npy
+
   transform_filtered_data:
     cmd: python transform_filtered_data.py
     deps:
-      - transform_filtered_data.py
-      - data/filtered_songs_data.csv
+    - transform_filtered_data.py
+    - data/filtered_songs_data.csv
     outs:
-      - data/transformed_hybrid_data.npz
+    - data/transformed_hybrid_data.npz
