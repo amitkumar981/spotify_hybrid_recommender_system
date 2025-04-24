@@ -188,3 +188,8 @@ cython_debug/
 .pypirc
 /transformer.pkl
 /sparse_matrix.npz
+# Ignore raw data files
+data/raw/*
+
+# BUT allow DVC pointer files
+!data/raw/*.dvc
