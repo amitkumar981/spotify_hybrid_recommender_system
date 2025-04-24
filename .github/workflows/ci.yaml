@@ -33,6 +33,9 @@ jobs:
         AWS_DEFAULT_REGION: ap-southeast-2
       run: dvc pull
 
+    - name: List raw data files (for debugging)
+      run: ls -lh data/raw/
+
     - name: Run DVC Pipeline
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY_ID }}
