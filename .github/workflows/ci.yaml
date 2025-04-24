@@ -28,7 +28,22 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
- 
+        pip install dvc[s3]
+
+    - name: Set up DVC remote
+      run: |
+        dvc remote add -d hybrid-recommender-system s3://hybrid-recommender-system
+        dvc remote modify hybrid-recommender-system region ap-southeast-2
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
+
+    - name: Run dvc pull
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
+        AWS_DEFAULT_REGION: ap-southeast-2
+      run: dvc pull
 
     - name: Run DVC Pipeline
       env:
@@ -36,7 +51,6 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
         AWS_DEFAULT_REGION: ap-southeast-2
       run: dvc repro
-
 
     - name: Configure Git
       run: |
@@ -49,7 +63,7 @@ jobs:
     - name: Commit changes
       if: ${{ github.actor != 'github-actions[bot]' }}
       run: |
-        git commit -m "Automated commit of DVC outputs and updated code" || echo "No changes to commit"
+        git diff --cached --quiet || git commit -m "Automated commit of DVC outputs and updated code"
 
     - name: Push changes
       if: ${{ github.actor != 'github-actions[bot]' }}
@@ -67,3 +81,4 @@ jobs:
     - name: Stop Streamlit app
       run: |
         pkill -f "streamlit run" || echo "No streamlit app to kill"
+
