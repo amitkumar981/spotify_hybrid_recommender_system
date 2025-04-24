@@ -16,7 +16,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
       with:
-        lfs: true  # Enable Git LFS if used
+        lfs: true
 
     - name: Set up Python
       uses: actions/setup-python@v5
@@ -47,11 +47,15 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
         AWS_DEFAULT_REGION: ap-southeast-2
       run: |
+        echo "Running: dvc pull -v"
         dvc pull -v
-        echo "Checking files in data/raw/"
+        echo "--- DVC Status ---"
+        dvc status -v
+        echo "--- Cache Check ---"
+        du -sh .dvc/cache || echo "No DVC cache found"
+        echo "--- File Check ---"
         ls -lh data/raw/ || echo "data/raw/ folder not found"
         ls -lh "data/raw/Music Info.csv" || echo "Music Info.csv not found"
-
 
     - name: Run DVC Pipeline
       env:
@@ -88,11 +92,11 @@ jobs:
 
     - name: Install test dependencies
       run: pip install pytest
-    
+
     - name: Test App
       run: |
         pytest test_app.py
-      
+
     - name: Stop Streamlit app
       run: |
-        pkill -f "streamlit run"
+        pkill -f "streamlit run" || echo "No streamlit app to kill"
