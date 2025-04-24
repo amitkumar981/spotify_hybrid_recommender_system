@@ -45,7 +45,10 @@ jobs:
         AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
         AWS_DEFAULT_REGION: ap-southeast-2
-      run: dvc pull
+      run: |
+        dvc pull
+        ls -lh data/raw/
+        ls -lh "data/raw/Music Info.csv"
 
     - name: List raw data files (debug step)
       run: ls -lh data/raw/
