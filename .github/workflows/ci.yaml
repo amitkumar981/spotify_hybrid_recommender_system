@@ -26,11 +26,19 @@ jobs:
         pip install 'dvc[s3]'
         pip install dagshub
 
-    - name: run dvc pipline
+    - name: Pull DVC-tracked data
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
         AWS_DEFAULT_REGION: ap-southeast-2
+      run: dvc pull
+
+    - name: Run DVC Pipeline
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
+        AWS_DEFAULT_REGION: ap-southeast-2
+      
       run: dvc repro
 
     - name: Push DVC-tracked data to remote
