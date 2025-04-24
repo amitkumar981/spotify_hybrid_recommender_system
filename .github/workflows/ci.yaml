@@ -2,6 +2,11 @@ name: CI-CD Pipeline
 
 on:
   push:
+    branches:
+      - master  # Adjust this if using a different branch
+  pull_request:
+    branches:
+      - master
 
 jobs:
   model-deployment:
@@ -11,7 +16,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
       with:
-        lfs: true
+        lfs: true  # Enable Git LFS if used
 
     - name: Set up Python
       uses: actions/setup-python@v5
@@ -26,6 +31,15 @@ jobs:
         pip install 'dvc[s3]'
         pip install dagshub
 
+    - name: Configure DVC remote (optional, only if not already configured in repo)
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
+      run: |
+        dvc remote default myremote
+        dvc remote modify myremote access_key_id $AWS_ACCESS_KEY_ID
+        dvc remote modify myremote secret_access_key $AWS_SECRET_ACCESS_KEY
+
     - name: Pull DVC-tracked data
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY_ID }}
@@ -33,7 +47,7 @@ jobs:
         AWS_DEFAULT_REGION: ap-southeast-2
       run: dvc pull
 
-    - name: List raw data files (for debugging)
+    - name: List raw data files (debug step)
       run: ls -lh data/raw/
 
     - name: Run DVC Pipeline
@@ -41,7 +55,6 @@ jobs:
         AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
         AWS_DEFAULT_REGION: ap-southeast-2
-      
       run: dvc repro
 
     - name: Push DVC-tracked data to remote
