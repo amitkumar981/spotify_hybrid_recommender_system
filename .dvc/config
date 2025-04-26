@@ -1,4 +1,7 @@
 [core]
-    remote = myremote
+    remote = hybrid-recommender-system
 ['remote "myremote"']
     url = s3://hybrid-recommender-system
+['remote "hybrid-recommender-system"']
+    url = s3://hybrid-recommender-system
+    region = ap-southeast-2
