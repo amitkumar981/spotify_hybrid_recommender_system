@@ -3,7 +3,7 @@
 # ---------------------
 
 # Ignore everything in the data folder
-data/**
+data/**/*
 
 # Allow all DVC-tracked files to be committed
 !data/**/*.dvc
