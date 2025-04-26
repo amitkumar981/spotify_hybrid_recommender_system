@@ -136,3 +136,4 @@ celerybeat.pid
 
 # Custom model/output artifacts
 /sparse_matrix.npz
+/transformer.pkl

@@ -21,8 +21,13 @@ stages:
     deps:
     - path: content_based_filtering.py
       hash: md5
+<<<<<<< HEAD
       md5: 7bf016159dd1b9693a3603d3a9d9b473
       size: 5053
+=======
+      md5: bcdf81b021531d0c0b9794751153bc57
+      size: 5221
+>>>>>>> 7a811ff5 (WIP: saving before pulling remote changes)
     - path: data/cleaned/cleaned_df.csv
       hash: md5
       md5: c01278ed93203f4a7eb7b77c5bfb6654
