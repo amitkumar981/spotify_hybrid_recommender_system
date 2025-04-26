@@ -3,7 +3,7 @@
 # ---------------------
 
 # Ignore everything in the data folder
-data/raw/Music info.csv
+data/raw/Music_info.csv
 data/raw/User Listening History.csv
 data\filtered_songs_data.csv
 data\cleaned\cleaned_df.csv 

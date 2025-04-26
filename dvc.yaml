@@ -2,7 +2,7 @@ stages:
   data_cleaning:
     cmd: python data_cleaning.py
     deps:
-    - data/raw/Music Info.csv
+    - data/raw/Music_info.csv
     - data_cleaning.py
     outs:
     - data/cleaned/cleaned_df.csv
