@@ -54,7 +54,7 @@ def train_transformer(data: pd.DataFrame):
         transformer = ColumnTransformer(transformers=[
             ('frequency_encode', CountEncoder(normalize=True, return_df=True), frequency_encode_cols),
             ('ohe_encode', OneHotEncoder(handle_unknown='ignore'), ohe_encode_cols),
-            ('tfidf_encode', TfidfVectorizer(max_features=85), tfidf_encode_col),
+            ('tfidf_encode', TfidfVectorizer(max_features=90),tfidf_encode_col),
             ('standard_scaler', StandardScaler(), standard_scale_cols),
             ('min_max_scaler', MinMaxScaler(), min_max_scale_cols)
         ], remainder='passthrough', n_jobs=-1)
