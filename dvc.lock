@@ -3,7 +3,7 @@ stages:
   data_cleaning:
     cmd: python data_cleaning.py
     deps:
-    - path: data/raw/Music Info.csv
+    - path: data/raw/Music_info.csv
       hash: md5
       md5: e63b74919a3cdada5c804df4666391c9
       size: 14985870
