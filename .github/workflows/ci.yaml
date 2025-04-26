@@ -33,13 +33,7 @@ jobs:
         pip install category_encoders
 
 
-    - name: Set up DVC remote
-      run: |
-        dvc remote add -d hybrid-recommender-system s3://hybrid-recommender-system
-        dvc remote modify hybrid-recommender-system region ap-southeast-2
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
+   
 
     - name: Run dvc pull
       env:
@@ -82,7 +76,7 @@ jobs:
       run: |
           nohup streamlit run app.py --server.port 8000 &
           sleep 30 
-          
+
     - name: Test App
       run: |
         pytest test_app.py
