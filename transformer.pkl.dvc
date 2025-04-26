@@ -1,0 +1,5 @@
+outs:
+- md5: 1e58e5a5dcf2d27f129695357c367631
+  size: 134026
+  hash: md5
+  path: transformer.pkl
