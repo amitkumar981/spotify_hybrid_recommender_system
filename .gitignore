@@ -3,21 +3,16 @@
 # ---------------------
 
 # Ignore everything in the data folder
-data/**/*
-
-# Allow all DVC-tracked files to be committed
-!data/**/*.dvc
-
-# Allow folder structure (for .dvc files to live in subfolders)
-!data/**/.gitkeep
+data/raw/Music info.csv
+data/raw/User Listening History.csv
+data\filtered_songs_data.csv
+data\cleaned\cleaned_df.csv 
 
 
 
-# Optional: keep placeholder file so folder is tracked by Git
-!data/raw/.gitkeep
 
-# DVC cache (optional — only ignore if you don't want to track it)
-.dvc/cache/
+
+
 
 # ------------------------------------
 # OS / Editor / Environment Artifacts
