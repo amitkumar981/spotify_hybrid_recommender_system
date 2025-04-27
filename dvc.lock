@@ -21,8 +21,8 @@ stages:
     deps:
     - path: content_based_filtering.py
       hash: md5
-      md5: 93018bfb60f2f324edc04fa905e335dd
-      size: 5220
+      md5: eedd7df7eb53d4e9bc9f7902fff0bcc0
+      size: 5213
     - path: data/cleaned/cleaned_df.csv
       hash: md5
       md5: 31b236affe096c097bc079fc1f342432

@@ -82,4 +82,21 @@ jobs:
     - name: Stop Streamlit app
       run: |
         pkill -f "streamlit run" || echo "No streamlit app to kill"
+    - name: Log in to ECR
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
+      run: |
+        aws ecr get-login-password --region ap-southeast-2 | docker login --username AWS --password-stdin 565393027942.dkr.ecr.ap-southeast-2.amazonaws.com
+
+    - name: Build Docker image
+      run: docker build -t spotify-hybrid-recommender-system .
+
+    - name: Tag Docker image
+      run: |
+        docker tag spotify-hybrid-recommender-system:latest 565393027942.dkr.ecr.ap-southeast-2.amazonaws.com/spotify-hybrid-recommender-system:latest
+
+    - name: Push Docker image to AWS ECR
+      run: |
+        docker push 565393027942.dkr.ecr.ap-southeast-2.amazonaws.com/spotify-hybrid-recommender-system:latest
 

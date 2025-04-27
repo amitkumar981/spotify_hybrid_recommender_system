@@ -133,7 +133,7 @@ def main():
     #apply transformation
     transformed = apply_transformation(filtered_data)
     if transformed is not None:
-        save_path = os.path.join('.', 'data', 'transformed_hybrid_data.npz')
+        save_path = os.path.join('.', 'data', 'transformed_data.npz')
         save_transformed_data(transformed, save_path)
 
 if __name__ == "__main__":
