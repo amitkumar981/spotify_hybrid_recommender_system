@@ -16,7 +16,7 @@ if [ "$(docker ps -q -f name=spotify-hybrid-recommender-system)"]; then
     docker stop swiggy-food-delivery-time-prediction
 fi
 
-if [ "$(docker ps -aq -f name=spotify-hybrid-recommender-system)"]; thrn
+if [ "$(docker ps -aq -f name=spotify-hybrid-recommender-system)"];then
     echo "Removing existing container..."
     docker rm spotify-hybrid-recommender-system
 fi
