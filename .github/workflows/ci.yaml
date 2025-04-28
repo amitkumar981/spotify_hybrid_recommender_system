@@ -100,3 +100,29 @@ jobs:
       run: |
         docker push 565393027942.dkr.ecr.ap-southeast-2.amazonaws.com/spotify-hybrid-recommender-system:latest
 
+    - name: Zip files for deployment
+      run: |
+        zip -r deployment.zip appspec.yml deploy/scripts/install_dependencies.sh deploy/scripts/start_docker.sh
+
+    - name: Upload ZIP to S3
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
+        AWS_DEFAULT_REGION: ap-southeast-2
+      run: |
+        aws s3 cp deployment.zip s3://spotify-hybrid-recsys-deployment-bucket/deployment.zip
+
+    - name: Deploy to AWS CodeDeploy
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
+        AWS_DEFAULT_REGION: ap-southeast-2
+      run: |
+        aws deploy create-deployment \
+          --application-name spotifyhybridrecsys \
+          --deployment-config-name CodeDeployDefault.AllAtOnce \
+          --deployment-group-name spotifyhybridrecsysgroup \
+          --s3-location bucket=spotify-hybrid-recsys-deployment-bucket,key=deployment.zip,bundleType=zip \
+          --file-exists-behavior OVERWRITE \
+          --region ap-southeast-2
+
